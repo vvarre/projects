@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.spr.model.ConnectionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-06-18T02:06:35" hostname="vijay-UBUNTU" time="0.45">
+  <properties/>
+  <testcase name="test" classname="com.spr.model.ConnectionTest" time="0.45"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

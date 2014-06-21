@@ -22,66 +22,35 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 @Configuration
-@EnableJpaRepositories("com.spr.dao")
+@EnableJpaRepositories("com.spr.repo")
 @EnableTransactionManagement(proxyTargetClass = true)
-@PropertySource(value = "classpath:application.properties")
+@PropertySource(value = "classpath:test.properties")
 public class DBConfig {
-	
+
 	@Autowired
 	Environment env;
-	
+
 	@Bean
 	@Autowired
-	public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+	public JpaTransactionManager transactionManager(
+			EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		JpaDialect jpaDialect = new HibernateJpaDialect();
 		txManager.setEntityManagerFactory(entityManagerFactory);
 		txManager.setJpaDialect(jpaDialect);
 		return txManager;
 	}
-	
+
 	@Bean
 	public HibernateExceptionTranslator hibernateExceptionTranslator() {
 		return new HibernateExceptionTranslator();
 	}
-	
-	  public void printClassLoader() throws ClassNotFoundException
-	    {
-	        System.out.println(this.getClass().getClassLoader());
-	        System.out.println(Thread.currentThread().getContextClassLoader());
-	       
-	      
 
-	        Class.forName("com.mysql.jdbc.Driver");
-	       
-	    }
-	
 	@Bean
 	public BoneCPDataSource boneCPDataSource() {
-		
-		System.out.println("-------- MySQL JDBC Connection Testing ------------");
-		 try {
-			printClassLoader();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		 
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Where is your MySQL JDBC Driver?");
-			e.printStackTrace();
-			return null;
-		}
 
 		BoneCPDataSource boneCPDataSource = new BoneCPDataSource();
 		//boneCPDataSource.setDriverClass("com.mysql.jdbc.Driver");
-		System.out.println(env.getProperty("jdbc.driver"));
-		System.out.println(env.getProperty("jdbc.url"));
-		System.out.println(env.getProperty("jdbc.username"));
-		System.out.println(env.getProperty("jdbc.password"));
-		
 		boneCPDataSource.setDriverClass(env.getProperty("jdbc.driver"));
 		boneCPDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
 		boneCPDataSource.setUsername(env.getProperty("jdbc.username"));
